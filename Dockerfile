@@ -1,5 +1,5 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.10-slim-buster
+FROM python:3.11-slim-buster
 
 # Set the working directory
 WORKDIR /usr/src/app
