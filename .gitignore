@@ -135,3 +135,5 @@ cython_debug/
 # FastAPI specific additions
 # You might want to exclude any .env files for environment variable management
 # and any development-specific config files.
+
+.idea
