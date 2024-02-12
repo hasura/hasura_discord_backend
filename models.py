@@ -1,7 +1,19 @@
 from pydantic import BaseModel
 from typing import Optional, List, Literal, Dict, Any
 
-DocumentSources = Literal['Docs V2', 'Docs V3', 'Discord', 'ZenDesk', 'StackOverflow', 'Reddit', 'Slack']
+DocumentSources = Literal[
+    'Docs V2',
+    'Docs V3',
+    'Discord',
+    'ZenDesk',
+    'StackOverflow',
+    'Reddit',
+    'Slack',
+    "Docs fly.io",
+    "Docs Turso",
+    "Docs Ionic",
+    "Docs Clickhouse"
+]
 
 
 class CreateDocumentForm(BaseModel):

@@ -16,6 +16,14 @@ OPENAI_ORGANIZATION = os.getenv('OPENAI_ORGANIZATION')
 OPENAI_MODEL = os.getenv('OPENAI_MODEL')
 OPENAI_EMBEDDING_MODEL = os.getenv('OPENAI_EMBEDDING_MODEL')
 VECTOR_SIZE = int(os.getenv('VECTOR_SIZE', 1536))  # Provides a default value if not set
+SYSTEM_PROMPT = "You are a helpful search and support Engineer who handles a <query>"
+ROOT_QUERY_FORMAT = "<query_title>{title}</query_title> <query>{content}</query>```"
+ASSISTANT_RESULTS_WRAPPER = (
+    "I've gathered some search results that are likely to be helpful in assisting the user.\n"
+    "Here are the search results: <search_results>\n{content}\n</search_results>"
+)
+RAG_FORMATTER = "{num}. {url} Score: %{score}\n{body}\n"
+SEARCH_FORMATTER = "**{num}. Score: %{score:.2f}**\n{url}\n\n"
 
 GRAPHQL_URL = os.getenv('GRAPHQL_URL')
 GRAPHQL_ADMIN_SECRET = os.getenv('GRAPHQL_ADMIN_SECRET')

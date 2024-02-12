@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, Body, HTTPException, status
 from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import os
 
 from endpoints.new_message_event import do_new_message_event
 from endpoints.search import do_search
@@ -46,10 +47,10 @@ async def search(search_request: SearchRequest):
     return await do_search(search_request)
 
 
-@app.post("/new_message_event/")
+@app.post("/new_message_event/", dependencies=[Depends(get_api_key)])
 async def new_message_event(data: Event = Body(...)):
     return await do_new_message_event(data)
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8100)
+    uvicorn.run(app, port=os.getenv("PORT", 8080))

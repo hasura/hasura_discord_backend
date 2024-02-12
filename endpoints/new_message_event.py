@@ -17,20 +17,20 @@ async def do_new_message_event(data: Event):
                                                 GET_THREAD_GRAPHQL,
                                                 {"thread_id": message_data["thread_id"]},
                                                 GRAPHQL_HEADERS)
-            thread = thread_data.get("files", {}).get("thread_by_pk", None)
+            thread = thread_data.get("data", {}).get("thread_by_pk", None)
             if thread is None:
                 return
             title = thread.get("title")
             collection = thread.get("collection")
             messages = [
                 {"role": "system",
-                 "content": f"You are a helpful search and support Engineer who handles a <query>"
+                 "content": SYSTEM_PROMPT
                  }
             ]
             vector_content = ""
             for i, message in enumerate(thread.get("messages")):
                 if i == 0:
-                    message["content"] = f"<query_title>{title}</query_title> <query>{message['content']}</query>```"
+                    message["content"] = ROOT_QUERY_FORMAT.format(title=title, content=message["content"])
                 new_message = {
                     "role": "assistant" if message_data["from_bot"] else "user",
                     "content": message["content"]
@@ -44,17 +44,20 @@ async def do_new_message_event(data: Event):
                                                  query_vector=vector,
                                                  limit=5,
                                                  with_payload=["url", "body"])
-            formatted_text = (
-                f"I've gathered some search results that are likely to be helpful in assisting the user.\n"
-                f"Here are the search results: <search_results>\n")
+            formatted_text = ""
             search_links = ""
             for i, result in enumerate(results):
-                formatted_text += f"{i + 1}. {result.payload['url']} Score: %{result.score}\n{result.payload['body']}\n"
-                search_links += f"**{i + 1}. %{result.score:0.2f} Match** {result.payload['url']} \n"
-            formatted_text += "</search_results>\n"
+                formatted_text += RAG_FORMATTER.format(num=i + 1,
+                                                       url=result.payload["url"],
+                                                       score=result.score,
+                                                       body=result.payload["body"])
+                search_links += SEARCH_FORMATTER.format(num=i + 1,
+                                                        score=result.score,
+                                                        url=result.payload["url"])
+            result_text = ASSISTANT_RESULTS_WRAPPER.format(content=formatted_text)
             messages.append({
                 "role": "assistant",
-                "content": formatted_text
+                "content": result_text
             })
             completion = await openai_client.chat.completions.create(
                 model=OPENAI_MODEL,

@@ -12,9 +12,17 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the source code into the container
 COPY app.py .
+COPY constants.py .
+COPY models.py .
+COPY utilities.py .
+COPY endpoints/ endpoints/
+
+# Copy the entrypoint script into the container and make it executable
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 # Set the environment variable to ensure that Python outputs everything to the terminal
 ENV PYTHONUNBUFFERED=1
 
 # Set the command to run your application
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8100"]
+ENTRYPOINT ["./entrypoint.sh"]

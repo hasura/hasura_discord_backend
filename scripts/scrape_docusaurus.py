@@ -273,6 +273,13 @@ def scrape_docs(root_url, root_file, docs_root, doc_dict, dev=True, wait_time=1)
     return document_text
 
 
+ROOTS = {
+    "https://hasura.io/docs/3.0/": "https://hasura.io",
+    "https://hasura.io/docs/latest/": "https://hasura.io",
+    "https://fly.io/docs/": "https://fly.io"
+
+}
+
 # Run the scraper and save the output to a file
 docs = {}
 root_url = "https://hasura.io/docs/3.0/"
