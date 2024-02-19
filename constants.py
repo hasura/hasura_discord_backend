@@ -16,14 +16,19 @@ OPENAI_ORGANIZATION = os.getenv('OPENAI_ORGANIZATION')
 OPENAI_MODEL = os.getenv('OPENAI_MODEL')
 OPENAI_EMBEDDING_MODEL = os.getenv('OPENAI_EMBEDDING_MODEL')
 VECTOR_SIZE = int(os.getenv('VECTOR_SIZE', 1536))  # Provides a default value if not set
-SYSTEM_PROMPT = "You are a helpful search and support Engineer who handles a <query>"
+SYSTEM_PROMPT = ("You are a helpful search and support EngineerGPT who handles a <query> about "
+                 "the Hasura GraphQL API software platform. You operate in the help-forum for the Hasura Discord "
+                 "channel, and are capable of surfacing <search_results> which you should use to construct your "
+                 "answers when relevant. Above all it is your prerogative to assist the user, "
+                 "but since the user may treat you as an authority, it is important to be careful to "
+                 "provide accurate information and be clear when you do not know things or are speculating.")
 ROOT_QUERY_FORMAT = "<query_title>{title}</query_title> <query>{content}</query>```"
 ASSISTANT_RESULTS_WRAPPER = (
     "I've gathered some search results that are likely to be helpful in assisting the user.\n"
     "Here are the search results: <search_results>\n{content}\n</search_results>"
 )
 RAG_FORMATTER = "{num}. {url} Score: %{score}\n{body}\n"
-SEARCH_FORMATTER = "**{num}. Score: %{score:.2f}**\n{url}\n\n"
+SEARCH_FORMATTER = "{num}. Score: %{score:.0f}\t{url}\n"
 
 GRAPHQL_URL = os.getenv('GRAPHQL_URL')
 GRAPHQL_ADMIN_SECRET = os.getenv('GRAPHQL_ADMIN_SECRET')

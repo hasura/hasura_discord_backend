@@ -52,7 +52,7 @@ async def do_new_message_event(data: Event):
                                                        score=result.score,
                                                        body=result.payload["body"])
                 search_links += SEARCH_FORMATTER.format(num=i + 1,
-                                                        score=result.score,
+                                                        score=result.score*100,
                                                         url=result.payload["url"])
             result_text = ASSISTANT_RESULTS_WRAPPER.format(content=formatted_text)
             messages.append({

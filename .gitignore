@@ -140,3 +140,4 @@ cython_debug/
 
 files/*.json
 bots/
+scripts/files/*.json
