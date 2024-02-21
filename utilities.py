@@ -9,7 +9,8 @@ import aiohttp
 # TODO: Create a client pool
 def get_qdrant_client() -> AsyncQdrantClient:
     return AsyncQdrantClient(url=QDRANT_URL,
-                             api_key=QDRANT_API_KEY)
+                             api_key=QDRANT_API_KEY,
+                             timeout=60)
 
 
 def get_openai_client() -> AsyncOpenAI:
