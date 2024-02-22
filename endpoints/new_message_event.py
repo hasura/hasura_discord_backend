@@ -61,7 +61,8 @@ async def do_new_message_event(data: Event):
             })
             completion = await openai_client.chat.completions.create(
                 model=OPENAI_MODEL,
-                messages=messages
+                messages=messages,
+                temperature=OPENAI_CHAT_TEMPERATURE
             )
             result = completion.choices[0].message.content
             # Add a message to the thread.

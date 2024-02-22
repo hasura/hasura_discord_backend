@@ -15,6 +15,7 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 OPENAI_ORGANIZATION = os.getenv('OPENAI_ORGANIZATION')
 OPENAI_MODEL = os.getenv('OPENAI_MODEL')
 OPENAI_EMBEDDING_MODEL = os.getenv('OPENAI_EMBEDDING_MODEL')
+OPENAI_CHAT_TEMPERATURE = float(os.getenv("OPENAI_CHAT_TEMPERATURE", 1.0))
 VECTOR_SIZE = int(os.getenv('VECTOR_SIZE', 1536))  # Provides a default value if not set
 SYSTEM_PROMPT = ("You are a helpful search and support EngineerGPT who handles a <query> about "
                  "the Hasura GraphQL API software platform. You operate in the help-forum for the Hasura Discord "
